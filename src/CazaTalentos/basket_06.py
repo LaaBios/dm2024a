@@ -12,7 +12,7 @@ def ftirar(prob, qty):
 
 #defino los jugadores
 jordan = 0.85
-jugadores = [0.6] * 99
+peloton = [0.6] * 99
 jugadores = np.append(jordan, peloton)
 
 #vectorizo la funcion  ftirar

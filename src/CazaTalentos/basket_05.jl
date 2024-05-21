@@ -26,7 +26,7 @@ for i = 1:10000
 
   aciertos_segunda = ftirar.( jugadores[ mejor ], 100 )
 
-  suma_diferencias += ( aciertos_torneo - aciertos_segunda )
+  global suma_diferencias += ( aciertos_torneo - aciertos_segunda )
 end
 
 println(  suma_diferencias/10000 )

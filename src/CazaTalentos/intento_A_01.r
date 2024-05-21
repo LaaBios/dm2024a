@@ -55,7 +55,7 @@ gimnasio_veredicto  <- function( pid )
 #En la segunda ronda, a la mejor mitad de la anterior ronda se los hace tirar 400 tiros a cada uno
 #Se elige el mejor jugador de la segunda ronda
 
-set.seed( 102191 )
+set.seed( 881987 )
 
 #inicializo el juego
 gimnasio_init()
