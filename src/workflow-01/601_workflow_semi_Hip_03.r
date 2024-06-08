@@ -93,7 +93,7 @@ FEintra_base <- function( pinputexps )
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 ) # linea fija
 
 
-  param_local$meta$script <- "/src/workflow-01/z531_FE_intrames.r"
+  param_local$meta$script <- "/src/workflow-01/531_FE_intrames_exp3"                                                    #CAMBIO POR RECOMENDACION
 
   param_local$semilla <- NULL  # no usa semilla, es deterministico
 
@@ -129,8 +129,8 @@ FEhist_base <- function( pinputexps)
   param_local$meta$script <- "/src/workflow-01/z551_FE_historia.r"
 
   param_local$lag1 <- TRUE
-  param_local$lag2 <- FALSE # no me engraso con los lags de orden 2
-  param_local$lag3 <- FALSE # no me engraso con los lags de orden 3
+  param_local$lag2 <- TRUE #FALSE # no me engraso con los lags de orden 2                                                #CAMBIO POR RECOMENDACION
+  param_local$lag3 <- TRUE #FALSE # no me engraso con los lags de orden 2                                                #CAMBIO POR RECOMENDACION
 
   # no me engraso las manos con las tendencias
   param_local$Tendencias1$run <- TRUE  # FALSE, no corre nada de lo que sigue
@@ -288,18 +288,18 @@ TS_strategy_base9 <- function( pinputexps )
   param_local$future <- c(202109)
   param_local$final_train <- c(202107, 202106, 202105, 202104, 202103, 202102, 202101, 
                                202012, 202011, 202010, 202009, 202008, 202007, 202005, 202004, 202003, 202002, 202001,
-                               201912, 201911, 201909, 201908, 201907, 201906, 201904, 201903)
+                               201912, 201911, 201909, 201908, 201907, 201906)
 
 
-  param_local$train$training <- c(202105, 202104, 202103, 202102, 202101, 
+  param_local$train$training <- c(202103, 202102, 202101, 
                                   202012, 202011, 202010, 202009, 202008, 202007, 202005, 202004, 202003, 202002, 202001,
                                   201912, 201911, 201909, 201908, 201907, 201906, 201904, 201903, 201902, 201901)
-  param_local$train$validation <- c(202106)
-  param_local$train$testing <- c(202107)
+  param_local$train$validation <- c(202104)
+  param_local$train$testing <- c(202107, 202106, 202105)
 
   # Atencion  0.2  de  undersampling de la clase mayoritaria,  los CONTINUA
   # 1.0 significa NO undersampling
-  param_local$train$undersampling <- 0.2
+  param_local$train$undersampling <- 0.7
   param_local$train$clase_minoritaria <- c( "BAJA+1", "BAJA+2")
 
   return( exp_correr_script( param_local ) ) # linea fija
@@ -462,7 +462,7 @@ wf_semillerio9 <- function( pnombrewf )
   DR_drifting_base(metodo="rank_cero_fijo")
   FEhist_base()
   FErf_attributes_base()
-  #CN_canaritos_asesinos_base(ratio=0.2, desvio=4.0)
+  CN_canaritos_asesinos_base(ratio=0.01, desvio=0)                                                                             #CAMBIO POR RECOMENDACION
 
   ts9 <- TS_strategy_base9()
   ht <- HT_tuning_base()
