@@ -175,7 +175,7 @@ FErf_attributes_base <- function( pinputexps, ratio, desvio)
   # parametros para que LightGBM se comporte como Random Forest
   param_local$lgb_param <- list(
     # parametros que se pueden cambiar
-    num_iterations = 50,                                                                                              #CAMBIO POR RECOMENDACION                                                                         #CAMBIO POR RECOMENDACION
+    num_iterations = 50,                                                                                              #CAMBIO POR RECOMENDACION
     num_leaves  = 40,                                                                                                 #CAMBIO POR RECOMENDACION
     min_data_in_leaf = 100,                                                                                           #CAMBIO POR RECOMENDACION
     feature_fraction_bynode  = 0.1,                                                                                   #CAMBIO POR RECOMENDACION
@@ -288,18 +288,18 @@ TS_strategy_base9 <- function( pinputexps )
   param_local$future <- c(202109)
   param_local$final_train <- c(202107, 202106, 202105, 202104, 202103, 202102, 202101, 
                                202012, 202011, 202010, 202009, 202008, 202007, 202006, 202005, 202004, 202003, 202002, 202001,
-                               201912, 201911, 201910, 201909, 201908, 201907, 201906, 201905, 201904, 201903)
+                               201912, 201911, 201910, 201909, 201908, 201907, 201906, 201905)
 
 
-  param_local$train$training <- c(202105, 202104, 202103, 202102, 202101, 
+  param_local$train$training <- c(2202103, 202102, 202101, 
                                   202012, 202011, 202010, 202009, 202008, 202007, 202006, 202005, 202004, 202003, 202002, 202001,
                                   201912, 201911, 201910, 201909, 201908, 201907, 201906, 201905, 201904, 201903, 201902, 201901)
-  param_local$train$validation <- c(202106)
-  param_local$train$testing <- c(202107)
+  param_local$train$validation <- c(202104)
+  param_local$train$testing <- c(202107, 202106, 202105)
 
   # Atencion  0.2  de  undersampling de la clase mayoritaria,  los CONTINUA
   # 1.0 significa NO undersampling
-  param_local$train$undersampling <- 0.4
+  param_local$train$undersampling <- 0.7
   param_local$train$clase_minoritaria <- c( "BAJA+1", "BAJA+2")
 
   return( exp_correr_script( param_local ) ) # linea fija
