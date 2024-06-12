@@ -76,7 +76,7 @@ CA_catastrophe_base <- function( pinputexps, metodo )
 {
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 ) # linea fija
 
-  param_local$meta$script <- "/src/workflow-01/521_CA_reparar_datase_missforest.r"                                        #CAMBIO POR RECOMENDACION
+  param_local$meta$script <- "/src/workflow-01/z521_CA_reparar_dataset.r"
 
   # Opciones MachineLearning EstadisticaClasica Ninguno
   param_local$metodo <- metodo
@@ -93,7 +93,7 @@ FEintra_base <- function( pinputexps )
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 ) # linea fija
 
 
-  param_local$meta$script <- "/src/workflow-01/531_FE_intrames_exp3.r"                                                    #CAMBIO POR RECOMENDACION
+  param_local$meta$script <- "/src/workflow-01/531_FE_intrames_exp3"                                                    #CAMBIO POR RECOMENDACION
 
   param_local$semilla <- NULL  # no usa semilla, es deterministico
 
@@ -108,7 +108,7 @@ DR_drifting_base <- function( pinputexps, metodo)
   if( -1 == (param_local <- exp_init())$resultado ) return( 0 ) # linea fija
 
 
-  param_local$meta$script <- "/src/workflow-01/z541_DR_corregir_drifting.r"                                               #SIN CAMBIOS
+  param_local$meta$script <- "/src/workflow-01/z541_DR_corregir_drifting.r"
 
   # valores posibles
   #  "ninguno", "rank_simple", "rank_cero_fijo", "deflacion", "estandarizar"
@@ -130,7 +130,7 @@ FEhist_base <- function( pinputexps)
 
   param_local$lag1 <- TRUE
   param_local$lag2 <- TRUE #FALSE # no me engraso con los lags de orden 2                                                #CAMBIO POR RECOMENDACION
-  param_local$lag3 <- FALSE # no me engraso con los lags de orden 3
+  param_local$lag3 <- TRUE #FALSE # no me engraso con los lags de orden 2                                                #CAMBIO POR RECOMENDACION
 
   # no me engraso las manos con las tendencias
   param_local$Tendencias1$run <- TRUE  # FALSE, no corre nada de lo que sigue
@@ -138,17 +138,17 @@ FEhist_base <- function( pinputexps)
   param_local$Tendencias1$tendencia <- TRUE
   param_local$Tendencias1$minimo <- FALSE
   param_local$Tendencias1$maximo <- FALSE
-  param_local$Tendencias1$promedio <- TRUE #FALSE                                                                       #CAMBIO POR RECOMENDACION
+  param_local$Tendencias1$promedio <- FALSE
   param_local$Tendencias1$ratioavg <- FALSE
   param_local$Tendencias1$ratiomax <- FALSE
 
   # no me engraso las manos con las tendencias de segundo orden
-  param_local$Tendencias2$run <- TRUE #FALSE                                                                            #CAMBIO POR RECOMENDACION
+  param_local$Tendencias2$run <- FALSE
   param_local$Tendencias2$ventana <- 12
-  param_local$Tendencias2$tendencia <- TRUE #FALSE                                                                      #CAMBIO POR RECOMENDACION
+  param_local$Tendencias2$tendencia <- FALSE
   param_local$Tendencias2$minimo <- FALSE
   param_local$Tendencias2$maximo <- FALSE
-  param_local$Tendencias2$promedio <- TRUE #FALSE                                                                       #CAMBIO POR RECOMENDACION
+  param_local$Tendencias2$promedio <- FALSE
   param_local$Tendencias2$ratioavg <- FALSE
   param_local$Tendencias2$ratiomax <- FALSE
 
@@ -175,10 +175,10 @@ FErf_attributes_base <- function( pinputexps, ratio, desvio)
   # parametros para que LightGBM se comporte como Random Forest
   param_local$lgb_param <- list(
     # parametros que se pueden cambiar
-    num_iterations = 50,                                                                                              #CAMBIO POR RECOMENDACION                                                                         #CAMBIO POR RECOMENDACION
-    num_leaves  = 40,                                                                                                 #CAMBIO POR RECOMENDACION
-    min_data_in_leaf = 100,                                                                                           #CAMBIO POR RECOMENDACION
-    feature_fraction_bynode  = 0.1,                                                                                   #CAMBIO POR RECOMENDACION
+    num_iterations = 20,
+    num_leaves  = 16,
+    min_data_in_leaf = 1000,
+    feature_fraction_bynode  = 0.2,
 
     # para que LightGBM emule Random Forest
     boosting = "rf",
@@ -287,19 +287,19 @@ TS_strategy_base9 <- function( pinputexps )
 
   param_local$future <- c(202109)
   param_local$final_train <- c(202107, 202106, 202105, 202104, 202103, 202102, 202101, 
-                               202012, 202011, 202010, 202009, 202008, 202007, 202006, 202005, 202004, 202003, 202002, 202001,
-                               201912, 201911, 201910, 201909, 201908, 201907, 201906, 201905, 201904, 201903)
+                               202012, 202011, 202010, 202009, 202008, 202007, 202005, 202004, 202003, 202002, 202001,
+                               201912, 201911, 201909, 201908, 201907, 201906)
 
 
-  param_local$train$training <- c(202105, 202104, 202103, 202102, 202101, 
-                                  202012, 202011, 202010, 202009, 202008, 202007, 202006, 202005, 202004, 202003, 202002, 202001,
-                                  201912, 201911, 201910, 201909, 201908, 201907, 201906, 201905, 201904, 201903, 201902, 201901)
-  param_local$train$validation <- c(202106)
-  param_local$train$testing <- c(202107)
+  param_local$train$training <- c(202103, 202102, 202101, 
+                                  202012, 202011, 202010, 202009, 202008, 202007, 202005, 202004, 202003, 202002, 202001,
+                                  201912, 201911, 201909, 201908, 201907, 201906, 201904, 201903, 201902, 201901)
+  param_local$train$validation <- c(202104)
+  param_local$train$testing <- c(202107, 202106, 202105)
 
   # Atencion  0.2  de  undersampling de la clase mayoritaria,  los CONTINUA
   # 1.0 significa NO undersampling
-  param_local$train$undersampling <- 0.4
+  param_local$train$undersampling <- 0.7
   param_local$train$clase_minoritaria <- c( "BAJA+1", "BAJA+2")
 
   return( exp_correr_script( param_local ) ) # linea fija
@@ -459,11 +459,10 @@ wf_semillerio9 <- function( pnombrewf )
   DT_incorporar_dataset_competencia2024()
   CA_catastrophe_base( metodo="MachineLearning")
   FEintra_base()
-  #DR_drifting_base(metodo="deflacion") # esto aplica a las monetarias                                                  #NO CAMBIO POR RECOMENDACION
   DR_drifting_base(metodo="rank_cero_fijo")
   FEhist_base()
   FErf_attributes_base()
-  CN_canaritos_asesinos_base(ratio=1, desvio=0)                                                                             #CAMBIO POR RECOMENDACION
+  CN_canaritos_asesinos_base(ratio=0.01, desvio=0)                                                                             #CAMBIO POR RECOMENDACION
 
   ts9 <- TS_strategy_base9()
   ht <- HT_tuning_base()
